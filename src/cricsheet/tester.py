@@ -5,6 +5,6 @@
 import cricsheet as cs
 import yaml
 
-with open("../../localdata/ipl/335983.yaml") as doc:
+with open("cricsheetIPL/335983.yaml") as doc:
 	data=yaml.load(doc)
-	print cs.getTeams(data)
+	cs.runsBetween(data,1,6)
