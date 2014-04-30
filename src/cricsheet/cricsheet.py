@@ -28,10 +28,12 @@ def getBatsmen(yamldoc):
 #Print runs scored between start delivery and end delivery
 #Format of deliveries is e.g. 1.3 would be 3rd delivery of 2nd over
 def runsBetween(yamldoc, start, end):
+	result={}
 	for delivery in yamldoc['innings'][0]['1st innings']['deliveries']:
 		delkey=delivery.keys()[0]
 		if delkey<end+0.1 and delkey>=start:
-			print str(delkey)+","+ str(delivery[delkey]['runs']['batsman'])
+			result[delkey]=delivery[delkey]['runs']['batsman']
+	return result
 
 #Print the deliveries when wickets fall
 def wicketDeliveries(yamldoc):
@@ -42,7 +44,15 @@ def wicketDeliveries(yamldoc):
 
 #Print the runs scored in a particular over
 def runsInOver(yamldoc, over):
-	runsBetween(yamldoc, over-1,over)
+	return runsBetween(yamldoc, over-1,over)
+
+def totalRunsInOver(yamldoc,over):
+	runsinover=runsInOver(yamldoc, over)
+	total=0
+	result={}
+	for delivery in runsinover:
+		total=total+runsinover[delivery]
+	return total
 
 #returns balls in overs notation (21 balls is 3.3 overs)
 def ballsToOvers(balls):
@@ -53,18 +63,22 @@ def runsOnDelivery(yamldoc,delivery):
 
 
 def runsOnFirstLast(yamldoc):
+	result={}
 	over=0
 	oldover=0
 	for delivery in yamldoc['innings'][0]['1st innings']['deliveries']:
 		delkey=delivery.keys()[0]
 		over=int(delkey)
 		if oldover<over:
-			print str(oldkey)+","+  str(olddelivery[oldkey]['runs']['batsman'])
+			result[oldkey]=olddelivery[oldkey]['runs']['batsman']
 		#print delkey,over
 		if str(delkey-over) == str(0.1):
-			print str(delkey)+","+ str(delivery[delkey]['runs']['batsman'])
+			result[delkey]=delivery[delkey]['runs']['batsman']
 		runs=delivery[delkey]['runs']['batsman']
 		oldover=over
 		oldkey=delkey
 		olddelivery=delivery
-	print str(delkey)+","+ str(delivery[delkey]['runs']['batsman'])
+	result[delkey]=delivery[delkey]['runs']['batsman']
+	return result
+
+	
