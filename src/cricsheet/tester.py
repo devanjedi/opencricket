@@ -7,4 +7,5 @@ import yaml
 
 with open("cricsheetIPL/335983.yaml") as doc:
 	data=yaml.load(doc)
-	cs.runsBetween(data,1,6)
+#	cs.runsInOver(data,7)
+	cs.wicketDeliveries(data)
