@@ -23,5 +23,14 @@ def getBatsmen(yamldoc):
 			print info
 
 def runsBetween(yamldoc, start, end):
-	print yamldoc['innings'][0]['1st innings']['deliveries'][start-1][float(start)/10]['runs']['total']
-	print  yamldoc['innings'][0]['1st innings']['deliveries'][end-1][float(end)/10]['runs']['total']
+	for delivery in yamldoc['innings'][0]['1st innings']['deliveries']:
+		delkey=delivery.keys()[0]
+		if delkey<end+0.1 and delkey>=start:
+			print delivery[delkey]
+
+def runsInOver(yamldoc, over):
+	runsBetween(yamldoc, over-1,over)
+
+#returns balls in overs notation (21 balls is 3.3 overs)
+def ballsToOvers(balls):
+	return balls/6 + float(balls%6)/10
