@@ -8,4 +8,5 @@ import yaml
 with open("cricsheetIPL/335983.yaml") as doc:
 	data=yaml.load(doc)
 #	cs.runsInOver(data,7)
-	cs.wicketDeliveries(data)
+#	cs.wicketDeliveries(data)
+	cs.runsOnFirstLast(data)
