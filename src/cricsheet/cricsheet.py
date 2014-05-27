@@ -35,6 +35,18 @@ def runsBetween(yamldoc, start, end):
 			result[delkey]=delivery[delkey]['runs']['batsman']
 	return result
 
+def getLastDelivery(yamldoc, inning,offset):
+	if inning==1:
+		inningName='1st innings'
+	elif inning==2:
+		inningName='2nd innings'
+	if offset==0:
+		offset=-1
+	else:
+		offset=0-offset
+	return yamldoc['innings'][int(inning)-1][inningName]['deliveries'][offset].keys()[0]
+
+
 #Print the deliveries when wickets fall
 def wicketDeliveries(yamldoc):
 	for delivery in yamldoc['innings'][0]['1st innings']['deliveries']:
@@ -45,6 +57,14 @@ def wicketDeliveries(yamldoc):
 #Print the runs scored in a particular over
 def runsInOver(yamldoc, over):
 	return runsBetween(yamldoc, over-1,over)
+
+def totalRunsBetween(yamldoc,start,end):
+	runsB=runsBetween(yamldoc,start,end)
+	total=0
+	result={}
+	for delivery in runsB:
+		total=total+runsB[delivery]
+	return total
 
 def totalRunsInOver(yamldoc,over):
 	runsinover=runsInOver(yamldoc, over)
